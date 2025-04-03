@@ -26,7 +26,7 @@ class PostSeeder extends Seeder
             $slug = Str::slug($j);
             Post:: create([
                 'title'=> $j,
-                'slug'=>$slug,
+               'slug' => Str::slug('Inggris') . '-' . Str::uuid(), // Use uuid for guaranteed uniqueness
                 'description'=>'deskripsi untuk ' . $j,
                 'content'=>'untuk'. $j,
                 'status'=> 'published',

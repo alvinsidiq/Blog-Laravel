@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\Front\BlogDetailController;
+use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Member\BlogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomepageController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -19,11 +19,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //blog route
     // Route::get('/member/blogs',[BlogController::class,'index' ]);
-    Route::resource('/member/blogs',BlogController::class)->names([
+    Route::resource('/member/blogs',BlogController::class)
+   
+    ->names([
         'index' => 'member.blogs.index',
         'edit' => 'member.blogs.edit',
         'update'=> 'member.blogs.update',
+        'create'=> 'member.blogs.create',
+        'store'=>'member.blogs.store',
+        'destroy'=>'member.blogs.destroy'
     ]);
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/{slug}',[BlogDetailController::class, 'detail'])->name('blog-detail');
